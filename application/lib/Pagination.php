@@ -21,9 +21,9 @@ class Pagination {
    
     public function get() {
         $links = null;
-        $limits = $this->limits();
+        //$limits = $this->limits();
         $html = '<nav><ul class="pagination">';
-        for ($page = $limits[0]; $page <= $limits[1]; $page++) {
+        for ($page = 1; $page <= $this->amount; $page++) {
             if ($page == $this->current_page) {
                 $links .= '<li class="page-item active"><span class="page-link">'.$page.'</span></li>';
             } else {
@@ -31,11 +31,11 @@ class Pagination {
             }
         }
         if (!is_null($links)) {
-            if ($this->current_page > 1) {
-                $links = $this->generateHtml(1, 'Вперед').$links;
+            if ($this->current_page >= 1) {
+                $links = $this->generateHtml($this->current_page+1, 'Вперед').$links;
             }
-            if ($this->current_page < $this->amount) {
-                $links .= $this->generateHtml($this->amount, 'Назад');
+            if ($this->current_page > 1) {
+                $links .= $this->generateHtml($this->current_page-1, 'Назад');
             }
         }
         $html .= $links.' </ul></nav>';
@@ -49,18 +49,7 @@ class Pagination {
         return '<li class="page-item"><a class="page-link" href="/'.$this->route['controller'].'/'.$this->route['action'].'/'.$page.'">'.$text.'</a></li>';
     }
 
-    private function limits() {
-        $left = $this->current_page - round($this->max / 2);
-        $start = $left > 0 ? $left : 1;
-        if ($start + $this->max <= $this->amount) {
-            $end = $start > 1 ? $start + $this->max : $this->max;
-        }
-        else {
-            $end = $this->amount;
-            $start = $this->amount - $this->max > 0 ? $this->amount - $this->max : 1;
-        }
-        return array($start, $end);
-    }
+
    private function getPage(){
 
             $arr=explode('/',trim($_SERVER['REQUEST_URI'], '/'));
@@ -76,13 +65,12 @@ class Pagination {
             $currentPage = 1;
         }
         $this->current_page = $currentPage;
-        if ($this->current_page > 0) {
+
             if ($this->current_page > $this->amount) {
                 $this->current_page = $this->amount;
             }
-        } else {
-            $this->current_page = 1;
-        }
+
+
     }
 
     private function amount() {

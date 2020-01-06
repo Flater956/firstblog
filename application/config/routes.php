@@ -14,15 +14,15 @@
             'controller'=>'admin',
             'action'=>'add'
         ],
-        'admin/edit/[0-9+]'=>[
+        'admin/edit/\d+'=>[
             'controller'=>'admin',
             'action'=>'edit'
         ],
-        'admin/posts/[0-9+]'=>[
+        'admin/posts/\d+'=>[
             'controller'=>'admin',
             'action'=>'posts'
         ],
-        'admin/delete/[0-9+]'=>[
+        'admin/delete/\d+'=>[
             'controller'=>'admin',
             'action'=>'delete',
 
@@ -36,11 +36,11 @@
             'controller'=>'main',
             'action'=>'contact'
         ],
-        'post/[0-9+]'=>[
+        'post/\d+'=>[
             'controller'=>'main',
             'action'=>'post'
         ],
-        'main/index/[0-9+]|'=>[
+        'main/index/\d+|'=>[
             'controller'=>'main',
             'action'=>'index'
         ],
